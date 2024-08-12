@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "KNUTRUTHTTF";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KNUTRUTHTTF.woff2")
+  font-family: "SUITE-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2")
     format("woff2");
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
 }
 
 * {
   box-sizing: border-box;
-  font-family: "KNUTRUTHTTF";
+  font-family: "SUITE-Regular";
 }
 
 @layer utilities {
