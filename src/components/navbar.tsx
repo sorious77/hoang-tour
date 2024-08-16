@@ -21,7 +21,7 @@ import Image from "next/image";
 
 const Navbar = ({children}: { children: React.ReactNode }) => {
     return (
-        <div className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr] md:grid-cols-[60px_1fr]">
+        <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr] md:grid-cols-[60px_1fr]">
             <div
                 className="hidden md:flex flex-col gap-2 border-r bg-gray-100/40 dark:bg-gray-800/40 md:items-center lg:items-start">
                 <div className="flex h-[80px] items-center px-6">
@@ -48,7 +48,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                         </Link>
                         <Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50"
-                            href="/board"
+                            href="/feed"
                         >
                             <SquarePenIcon className="h-6 w-6"/>
                             <span className="hidden lg:inline">후기 작성</span>
@@ -119,7 +119,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                 <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
                     <section className="w-full relative h-[60vh] sm:h-[70vh] lg:h-[80vh]">
                         <div
-                            className="relative h-full flex flex-col items-center justify-center px-4 text-center space-y-4">
+                            className="relative h-full flex flex-col items-center px-4 text-center space-y-4">
                             {children}
                         </div>
                     </section>
