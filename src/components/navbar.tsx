@@ -21,9 +21,9 @@ import Image from "next/image";
 
 const Navbar = ({children}: { children: React.ReactNode }) => {
     return (
-        <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr] md:grid-cols-[60px_1fr]">
+        <div className="grid min-h-screen w-full relative">
             <div
-                className="hidden md:flex flex-col gap-2 border-r bg-gray-100/40 dark:bg-gray-800/40 md:items-center lg:items-start">
+                className="hidden md:flex flex-col gap-2 md:items-center lg:items-start fixed md:w-[50px] lg:w-[280px] bg-gray-100/40 dark:bg-gray-800/40 border-r min-h-screen">
                 <div className="flex h-[80px] items-center px-6">
                     <Link className="flex items-center gap-2 font-semibold" href="#">
                         <span className="hidden lg:inline text-2xl">Hoang Tour</span>
@@ -51,7 +51,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                             href="/feed"
                         >
                             <SquarePenIcon className="h-6 w-6"/>
-                            <span className="hidden lg:inline">후기 작성</span>
+                            <span className="hidden lg:inline">후기</span>
                         </Link>
                         <Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50"
@@ -70,7 +70,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                 {/*    </div>*/}
                 {/*</div>*/}
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full h-full md:w-screen-minus-50 lg:w-screen-minus-280 absolute top-0 md:left-[50px] lg:left-[280px] overflow-x-hidden">
                 <header
                     className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-2 lg:px-6 dark:bg-gray-800/40">
                     <div className="flex-1">

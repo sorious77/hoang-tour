@@ -13,6 +13,10 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      width: {
+        'screen-minus-50': 'calc(100vw - 50px)',
+        'screen-minus-280': 'calc(100vw - 280px)'
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
