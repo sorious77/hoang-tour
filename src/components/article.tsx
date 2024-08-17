@@ -3,7 +3,6 @@ import {LiaCommentAltSolid} from "react-icons/lia";
 import {SkeletonImage} from "@/components/skeleton";
 import HorizonLine from "@/components/horizonLine";
 
-
 const Article = (article: Article) => {
     return <div className="w-full sm:w-5/6 lg:w-2/3 flex flex-col gap-2 mb-6">
         <div className="flex justify-between items-center">

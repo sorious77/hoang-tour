@@ -1,10 +1,17 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Map from "@/components/map";
 
 
 const Pick = () => {
     const [stations, setStations] = useState<Station[] | null>(null)
     const [station, setStation] = useState<Station | null>(null)
+
+    const [isClient, setIsClient] = useState(false)
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
     useEffect(() => {
         (async () => {
@@ -24,9 +31,13 @@ const Pick = () => {
 
     return <div>
         <button onClick={getRandomStation}>
-            Gacha!
+            뽑기!
         </button>
-        <div>{station?.name}</div>
+        <>
+            <div>{station?.name}</div>
+            {isClient
+                && <Map station={station}/>}
+        </>
     </div>
 }
 
