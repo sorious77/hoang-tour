@@ -7,8 +7,6 @@ import {NavermapsProvider} from 'react-naver-maps';
 export default function App({Component, pageProps}: AppProps) {
     const ncpClientId: string = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID as string | ""
 
-    console.log(ncpClientId);
-
     return (
         <NavermapsProvider ncpClientId={ncpClientId}>
             <Layout>
