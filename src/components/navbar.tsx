@@ -25,7 +25,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
             <div
                 className="hidden md:flex flex-col gap-2 md:items-center lg:items-start fixed md:w-[50px] lg:w-[280px] bg-gray-100/40 dark:bg-gray-800/40 border-r min-h-screen">
                 <div className="flex h-[80px] items-center px-6">
-                    <Link className="flex items-center gap-2 font-semibold" href="#">
+                    <Link className="flex items-center gap-2 font-semibold" href="/">
                         <span className="hidden lg:inline text-2xl">Hoang Tour</span>
                         <BaggageClaimIcon className="w-6 h-6 lg:hidden md:inline"/>
                     </Link>
@@ -55,7 +55,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                         </Link>
                         <Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50"
-                            href="#"
+                            href="/profile/hi"
                         >
                             <CircleUserRoundIcon className="h-6 w-6"/>
                             <span className="hidden lg:inline">프로필</span>
