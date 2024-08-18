@@ -9,7 +9,7 @@ const Profile = ({user}: { user: User }) => {
     return <div>
         <div className="flex gap-10 py-10 w-[400px] sm:w-[500px] md:w-[700px] lg:w-[900px] lg:pl-48">
             <div className="ml-10 w-28 h-28 flex justify-center">
-                <img src={user.profileImage} className="rounded-full border border-gray-200"/>
+                <img src={user.profileImage} className="rounded-full border border-gray-200" alt="프로필 이미지"/>
             </div>
             <div className="text-left flex flex-col justify-center gap-4">
                 <div className="flex items-center gap-4">
@@ -31,8 +31,8 @@ const Profile = ({user}: { user: User }) => {
         </div>
         <div className="mb-10">
             <div className="grid grid-cols-3 gap-2">
-                {Array.from("x".repeat(10)).map(_ => (
-                    <div className="relative group cursor-pointer">
+                {Array.from("x".repeat(10)).map((_, idx) => (
+                    <div className="relative group cursor-pointer" key={`_${idx}`}>
                         <img className="aspect-square object-cover group-hover:brightness-50 transition rounded"
                              src="https://i.pinimg.com/736x/9b/65/29/9b6529111b01c8c261d7f83df3dd6c08.jpg"
                              alt="게시글"/>

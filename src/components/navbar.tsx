@@ -4,7 +4,6 @@ import {
     CircleUserRoundIcon,
     CompassIcon,
     MapIcon,
-    MenuIcon,
     SearchIcon,
     SquarePenIcon
 } from "lucide-react";
