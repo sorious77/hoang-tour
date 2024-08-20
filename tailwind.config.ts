@@ -15,7 +15,7 @@ const config: Config = {
       },
       width: {
         'screen-minus-50': 'calc(100vw - 50px)',
-        'screen-minus-280': 'calc(100vw - 280px)'
+        'screen-minus-230': 'calc(100vw - 230px)'
       }
     },
   },

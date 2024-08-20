@@ -7,7 +7,7 @@ import HorizonLine from "@/components/horizonLine";
 const Profile = ({user}: { user: User }) => {
 
     return <div>
-        <div className="flex gap-10 py-10 w-[400px] sm:w-[500px] md:w-[700px] lg:w-[900px] lg:pl-48">
+        <div className="flex gap-10 py-10 w-[400px] sm:w-[500px] md:w-[700px] lg:w-[850px] lg:pl-48">
             <div className="ml-10 w-28 h-28 flex justify-center">
                 <img src={user.profileImage} className="rounded-full border border-gray-200" alt="프로필 이미지"/>
             </div>
@@ -29,7 +29,7 @@ const Profile = ({user}: { user: User }) => {
         <div className="mb-10">
             <HorizonLine/>
         </div>
-        <div className="mb-10">
+        <div className="mb-10 w-[400px] sm:w-[500px] md:w-[700px] lg:w-[850px]">
             <div className="grid grid-cols-3 gap-2">
                 {Array.from("x".repeat(10)).map((_, idx) => (
                     <div className="relative group cursor-pointer" key={`_${idx}`}>
