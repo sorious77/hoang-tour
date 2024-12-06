@@ -10,7 +10,7 @@ const Article = (article: Article) => {
                 <SkeletonImage skeletonClassName="w-4 h-4" imgClassName="w-10 h-10 rounded-full border border-gray-300"
                                src={article.user.profileImage} alt="프로필 이미지"/>
                 <div className="flex gap-2 text-sm">
-                    <div className="font-semibold">{article.user.id}</div>
+                    <div className="font-semibold">{article.user.email}</div>
                     ·
                     <div className="text-gray-500">3일</div>
                 </div>

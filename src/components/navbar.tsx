@@ -4,19 +4,8 @@ import {
     CircleUserRoundIcon,
     CompassIcon,
     MapIcon,
-    SearchIcon,
     SquarePenIcon
 } from "lucide-react";
-import {Input} from "@/components/ui/input";
-import {
-    DropdownMenu,
-    DropdownMenuContent, DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import {Button} from "@/components/ui/button";
-import Image from "next/image";
 
 const Navbar = ({children}: { children: React.ReactNode }) => {
     return (

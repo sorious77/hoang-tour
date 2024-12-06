@@ -3,6 +3,7 @@ import axios from "axios";
 import {IoHeart} from "react-icons/io5";
 import {LiaCommentAltSolid} from "react-icons/lia";
 import HorizonLine from "@/components/horizonLine";
+import Link from "next/link";
 
 const Profile = ({user}: { user: User }) => {
 
@@ -15,15 +16,17 @@ const Profile = ({user}: { user: User }) => {
                 <div className="flex items-center gap-4">
                     <span className="text-3xl">{user.nickname}</span>
                     <button
-                        className="text-white bg-amber-400 px-3 py-1.5 rounded-lg hover:bg-amber-600 transition-colors ease-in-out">프로필
-                        편집
+                        className="text-white bg-amber-400 px-3 py-1.5 rounded-lg hover:bg-amber-600 transition-colors ease-in-out">
+                        <Link href="/profile/edit">
+                            프로필 편집
+                        </Link>
                     </button>
                 </div>
                 <div className="flex gap-3">
                     <div>게시물 <span className="font-bold">70</span></div>
                     <div>공감 <span className="font-bold">70</span></div>
                 </div>
-                <div>찌오 처음봐? 팍씨</div>
+                <div>{user.introduction}</div>
             </div>
         </div>
         <div className="mb-10">

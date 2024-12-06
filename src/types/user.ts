@@ -1,5 +1,6 @@
 type User = {
-    id: string;
+    email: string;
     nickname: string;
     profileImage: string;
+    introduction: string;
 }
