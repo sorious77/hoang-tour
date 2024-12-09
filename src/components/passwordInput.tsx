@@ -1,4 +1,5 @@
 import TooltipComponent from "@/components/tooltip";
+import {PasswordInputProps} from "@/types/inputProps";
 
 const PasswordInputComponent = ({
                                     id,
@@ -7,7 +8,8 @@ const PasswordInputComponent = ({
                                     className,
                                     required,
                                     placeholder,
-                                    hasTooltip
+                                    hasTooltip,
+                                    onChange
                                 }: PasswordInputProps) => {
     return <div className="flex flex-col gap-1 items-start w-full">
         <label htmlFor={id} className="flex items-center">
@@ -16,9 +18,11 @@ const PasswordInputComponent = ({
             {hasTooltip && <TooltipComponent message="비밀번호는 6자 이상 15자 이하, 영문/숫자/특수문자 최소 하나 이상씩을 포함해야 합니다."/>}
         </label>
         <input type={type} id={id} className={`border border-gray-200 rounded-lg px-4 py-1.5 w-full ${className}`}
+               name={name}
                maxLength={15}
                required={required}
                placeholder={placeholder || "비밀번호를 입력하세요."}
+               onChange={onChange}
         />
     </div>
 }

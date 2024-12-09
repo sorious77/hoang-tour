@@ -6,9 +6,9 @@ import {
     MapIcon,
     SquarePenIcon
 } from "lucide-react";
-import Button from "@/components/button";
 import React from "react";
 import {useRouter} from "next/navigation";
+import Button from "@/components/button";
 
 const Navbar = ({children}: { children: React.ReactNode }) => {
     const isLogin = false // TODO isLogin 처리

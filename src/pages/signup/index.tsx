@@ -18,7 +18,7 @@ const Page = () => {
                                     required={true}
                                     hasTooltip={false}
                                     placeholder="비밀번호를 한 번 더 입력하세요."/>
-            <Button value="회원가입" />
+            <Button value="회원가입" className="py-2"/>
         </form>
     </div>
 }

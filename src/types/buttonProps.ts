@@ -2,7 +2,8 @@ type ButtonProps = {
     className?: string,
     value: string,
     variant?: Variant,
-    onClick?: () => any
+    onClick?: () => any,
+    disabled?: boolean,
 }
 
 type Variant = "primary" | "outline"

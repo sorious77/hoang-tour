@@ -1,7 +1,7 @@
 import {GetServerSideProps} from "next";
 import {IoCameraReverseOutline} from "react-icons/io5";
 import {useHover} from "react-use";
-import {Button} from "@/components/ui/button";
+import Button from "@/components/button";
 import Input from "@/components/input";
 
 const Page = ({user}: { user: User }) => {
@@ -37,7 +37,7 @@ const Page = ({user}: { user: User }) => {
                 <Input id="password" type="password" name="비밀번호" maxLength={15}/>
                 <Input id="passwordConfirm" type="password" name="비밀번호 확인" maxLength={15} />
             </div>
-            <Button type="submit" className="w-16">확인</Button>
+            <Button className="w-16" value="확인" />
         </form>
     </div>
 }

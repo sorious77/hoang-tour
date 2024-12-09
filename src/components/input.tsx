@@ -1,5 +1,17 @@
+import {InputProps} from "@/types/inputProps";
+
 const InputComponent = ({
-                            id, type, name, defaultValue, value, className, disabled, maxLength, required, placeholder
+                            id,
+                            type,
+                            name,
+                            defaultValue,
+                            value,
+                            className,
+                            disabled,
+                            maxLength,
+                            required,
+                            placeholder,
+                            onChange
                         }: InputProps) => {
     return <div className="flex flex-col gap-1 items-start w-full">
         <label htmlFor={id}>
@@ -7,12 +19,14 @@ const InputComponent = ({
             {required && <span className="text-sm text-red-700">*</span>}
         </label>
         <input type={type} id={id} className={`border border-gray-200 rounded-lg px-4 py-1.5 w-full ${className}`}
+               name={name}
                defaultValue={defaultValue}
                value={value}
                disabled={disabled}
                maxLength={maxLength}
                required={required}
                placeholder={placeholder}
+               onChange={onChange}
         />
     </div>
 }
