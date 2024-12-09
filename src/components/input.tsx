@@ -1,5 +1,5 @@
 const InputComponent = ({
-                            id, type, name, defaultValue, value, className, disabled, maxLength, required
+                            id, type, name, defaultValue, value, className, disabled, maxLength, required, placeholder
                         }: InputProps) => {
     return <div className="flex flex-col gap-1 items-start w-full">
         <label htmlFor={id}>
@@ -12,8 +12,9 @@ const InputComponent = ({
                disabled={disabled}
                maxLength={maxLength}
                required={required}
+               placeholder={placeholder}
         />
     </div>
 }
 
-export {InputComponent};
+export default InputComponent;

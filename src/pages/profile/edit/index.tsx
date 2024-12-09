@@ -2,7 +2,7 @@ import {GetServerSideProps} from "next";
 import {IoCameraReverseOutline} from "react-icons/io5";
 import {useHover} from "react-use";
 import {Button} from "@/components/ui/button";
-import {InputComponent} from "@/components/input";
+import Input from "@/components/input";
 
 const Page = ({user}: { user: User }) => {
     const profileImage = (hovered: boolean) => {
@@ -25,8 +25,8 @@ const Page = ({user}: { user: User }) => {
         }}>
             {hoverable}
             <div className="flex gap-5 flex-col my-4 w-96">
-                <InputComponent id="email" type="text" name="이메일" value={user.email} disabled={true} />
-                <InputComponent id="nickname" type="text" name="닉네임" defaultValue={user.nickname} />
+                <Input id="email" type="text" name="이메일" value={user.email} disabled={true} />
+                <Input id="nickname" type="text" name="닉네임" defaultValue={user.nickname} />
                 <div className="flex flex-col gap-1 items-start w-full">
                     <label htmlFor="introduction" className="font-bold px-1 text-lg">소개</label>
                     <textarea id="introduction"
@@ -34,8 +34,8 @@ const Page = ({user}: { user: User }) => {
                               rows={2}
                               defaultValue={user.introduction}/>
                 </div>
-                <InputComponent id="password" type="password" name="비밀번호" maxLength={15}/>
-                <InputComponent id="passwordConfirm" type="password" name="비밀번호 확인" maxLength={15} />
+                <Input id="password" type="password" name="비밀번호" maxLength={15}/>
+                <Input id="passwordConfirm" type="password" name="비밀번호 확인" maxLength={15} />
             </div>
             <Button type="submit" className="w-16">확인</Button>
         </form>
