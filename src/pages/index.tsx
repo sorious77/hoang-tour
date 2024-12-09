@@ -1,5 +1,5 @@
 import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
+import Button from "@/components/button";
 
 const Component = () => {
     return (
@@ -17,7 +17,7 @@ const Component = () => {
                     placeholder="Search tours, destinations..."
                     type="text"
                 />
-                <Button>Find Tours</Button>
+                <Button value="Find Tours"/>
             </div>
         </>
     )

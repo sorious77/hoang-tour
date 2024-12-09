@@ -1,6 +1,6 @@
-import {Button} from "@/components/ui/button";
 import Input from "@/components/input";
 import PasswordInputComponent from "@/components/passwordInput";
+import Button from "@/components/button";
 
 const Page = () => {
     return <div className="w-96">
@@ -18,7 +18,7 @@ const Page = () => {
                                     required={true}
                                     hasTooltip={false}
                                     placeholder="비밀번호를 한 번 더 입력하세요."/>
-            <Button>회원가입</Button>
+            <Button value="회원가입" />
         </form>
     </div>
 }
