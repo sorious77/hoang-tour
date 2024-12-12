@@ -1,6 +1,3 @@
-import Button from "@/components/button";
-import Input from "@/components/input";
-
 const Component = () => {
     return (
         <>
@@ -11,14 +8,6 @@ const Component = () => {
                 Explore the most breathtaking destinations and create
                 unforgettable memories with our curated tours.
             </p>
-            <div className="flex flex-col sm:flex-row gap-2 w-full max-w-[500px]">
-                <Input
-                    className="flex-1"
-                    placeholder="Search tours, destinations..."
-                    type="text"
-                />
-                <Button value="Find Tours"/>
-            </div>
         </>
     )
 };

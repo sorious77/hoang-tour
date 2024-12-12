@@ -24,7 +24,7 @@ const Page = ({user}: { user: User }) => {
             console.log(e.target)
         }}>
             {hoverable}
-            <div className="flex gap-5 flex-col my-4 w-96">
+            <div className="flex gap-5 flex-col mb-6 w-96">
                 <Input id="email" type="text" name="이메일" value={user.email} disabled={true} />
                 <Input id="nickname" type="text" name="닉네임" defaultValue={user.nickname} />
                 <div className="flex flex-col gap-1 items-start w-full">
@@ -37,14 +37,14 @@ const Page = ({user}: { user: User }) => {
                 <Input id="password" type="password" name="비밀번호" maxLength={15}/>
                 <Input id="passwordConfirm" type="password" name="비밀번호 확인" maxLength={15} />
             </div>
-            <Button className="w-16" value="확인" />
+            <Button className="w-full py-2" value="수정" />
         </form>
     </div>
 }
 
 export default Page;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
     return {
         props: {
             user: {
