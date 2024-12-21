@@ -24,9 +24,12 @@ const Page = () => {
         setImages(prev => prev.filter((url) => url !== targetUrl));
     }
 
-    return <div className="flex flex-col w-full pb-10">
+    return <div className="flex flex-col w-full pb-10 -mt-2">
         {/* 제목, 방문 날짜, 내용, 이미지 6장까지 */}
         <form className="w-full flex gap-5 flex-col">
+            <button
+                className="sticky self-end top-2 px-2 py-1 mr-2 rounded bg-gray-400 hover:bg-gray-600 text-white w-16">저장
+            </button>
             <input id="title" className="border-b border-gray-200 px-4 py-1.5 w-full text-3xl focus:outline-none"
                    type="text" name="제목"
                    placeholder="제목"/>
@@ -37,7 +40,7 @@ const Page = () => {
                           rows={20}/>
             </div>
             <div>
-                <div className="grid grid-cols-3 gap-3 mb-10">
+                <div className="grid grid-cols-3 gap-3 mb-10 px-2">
                     {images.map((url, i) => (
                         <div key={url} className="relative">
                             <img key={url} src={url} className="shadow rounded h-96 w-96" alt={`image${i}`}/>
