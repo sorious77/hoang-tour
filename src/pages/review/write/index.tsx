@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import Button from "@/components/button";
 
 const Page = () => {
     const [images, setImages] = useState<string[]>([]);
@@ -54,9 +55,9 @@ const Page = () => {
     return <div className="flex flex-col w-full pb-10 -mt-2">
         {/* 제목, 방문 날짜, 내용, 이미지 6장까지 */}
         <form className="w-full flex gap-5 flex-col">
-            <button
-                className="sticky self-end top-2 px-2 py-1 mr-2 rounded bg-gray-400 hover:bg-gray-600 text-white w-16">저장
-            </button>
+            <Button
+                className="sticky self-end top-2 px-2 py-1 mr-2 w-16"
+                value="저장"/>
             <input id="title" className="border-b border-gray-200 px-4 py-1.5 w-full text-3xl focus:outline-none"
                    type="text" name="제목"
                    placeholder="제목"/>
@@ -103,8 +104,9 @@ const Page = () => {
                     ))}
                 </div>
                 <label htmlFor="file"
-                       className={`border border-blue-600 hover:bg-blue-600 hover:text-white text-blue-600 px-5 py-4 rounded-xl hover:cursor-pointer
-                       ${images.length >= 6 && "border-none bg-gray-400 text-white hover:bg-gray-400 hover:cursor-not-allowed"}`}>사진을
+                       className={`px-5 py-4 rounded-xl hover:cursor-pointer transition-colors ease-in-out
+                       ${images.length >= 6 ? "border-none bg-gray-400 text-white hover:bg-gray-400 hover:cursor-not-allowed" :
+                           "border border-amber-400 hover:bg-amber-400 hover:text-white text-amber-400"}`}>사진을
                     추가해주세요</label>
                 <input className="absolute w-0 h-0 overflow-hidden border-none" type="file" id="file"
                        multiple={true}

@@ -1,6 +1,6 @@
 const Button = ({className, value, onClick, variant = "primary", disabled}: ButtonProps) => {
     return <button
-        className={`${variant === "primary" ? "bg-blue-600 hover:bg-blue-400 text-white disabled:bg-blue-400" : "text-blue-600 hover:text-blue-950"} px-3 py-1 rounded-lg ${className}`}
+        className={`${variant === "primary" ? "bg-amber-400 hover:bg-amber-600 text-white disabled:bg-amber-400" : "text-amber-600 hover:text-amber-950"} px-3 py-1 rounded-lg transition-colors ease-in-out ${className}`}
         onClick={onClick}
         disabled={disabled}
     >
