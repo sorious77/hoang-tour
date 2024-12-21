@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import apiHandler from "@/lib/apiHandler";
+import {User} from "@/types/user";
 
 const handler = (
     req: NextApiRequest,

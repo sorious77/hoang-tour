@@ -3,6 +3,7 @@ import {IoCameraReverseOutline} from "react-icons/io5";
 import {useHover} from "react-use";
 import Button from "@/components/button";
 import Input from "@/components/input";
+import {User} from "@/types/user";
 
 const Page = ({user}: { user: User }) => {
     const profileImage = (hovered: boolean) => {

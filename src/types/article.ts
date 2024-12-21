@@ -1,4 +1,6 @@
-type Article = {
+import {User} from "@/types/user";
+
+export type Article = {
     id: string;
     title: string;
     description: string;

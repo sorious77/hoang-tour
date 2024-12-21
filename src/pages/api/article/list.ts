@@ -1,5 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from "next";
 import apiHandler from "@/lib/apiHandler";
+import {Article} from "@/types/article";
 
 const handler = (
     req: NextApiRequest,
