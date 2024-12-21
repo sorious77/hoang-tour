@@ -43,7 +43,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                         </Link>
                         <Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50"
-                            href="/feed"
+                            href="/review"
                         >
                             <SquarePenIcon className="h-6 w-6"/>
                             <span className="hidden lg:inline">후기</span>
