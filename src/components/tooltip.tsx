@@ -6,7 +6,7 @@ const TooltipComponent = ({message}: { message: string }) => {
         <Tooltip.Provider>
             <Tooltip.Root>
                 <Tooltip.Trigger asChild>
-                    <button className="IconButton">
+                    <button className="IconButton" type="button">
                         <InfoCircledIcon/>
                     </button>
                 </Tooltip.Trigger>

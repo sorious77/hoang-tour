@@ -3,7 +3,7 @@ import {ChangeEvent} from "react";
 export type InputProps = {
     id: string,
     type: InputType,
-    name: string,
+    labelName: string,
     defaultValue?: string,
     value?: string,
     className?: string,
@@ -11,7 +11,7 @@ export type InputProps = {
     maxLength?: number,
     required?: boolean,
     placeholder?: string,
-    onChange?: (e: ChangeEvent<HTMLInputElement>) => any
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => any,
 }
 
 export type PasswordInputProps = {

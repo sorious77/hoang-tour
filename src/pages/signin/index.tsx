@@ -27,7 +27,7 @@ const Page = () => {
     return <div className="w-96">
         <h1 className="text-2xl font-bold mb-10">로그인</h1>
         <form className="flex flex-col gap-5 mb-4">
-            <Input id="email" type="email" name="이메일" required={true} placeholder="이메일을 입력하세요." onChange={onChange}/>
+            <Input id="email" type="email" labelName="이메일" required={true} placeholder="이메일을 입력하세요." onChange={onChange}/>
             <PasswordInput id="password"
                            type="password"
                            name="비밀번호"

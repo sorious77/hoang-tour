@@ -26,8 +26,8 @@ const Page = ({user}: { user: User }) => {
         }}>
             {hoverable}
             <div className="flex gap-5 flex-col mb-6 w-96">
-                <Input id="email" type="text" name="이메일" value={user.email} disabled={true} />
-                <Input id="nickname" type="text" name="닉네임" defaultValue={user.nickname} />
+                <Input id="email" type="text" labelName="이메일" value={user.email} disabled={true} />
+                <Input id="nickname" type="text" labelName="닉네임" defaultValue={user.nickname} />
                 <div className="flex flex-col gap-1 items-start w-full">
                     <label htmlFor="introduction" className="font-bold px-1 text-lg">소개</label>
                     <textarea id="introduction"
@@ -35,8 +35,8 @@ const Page = ({user}: { user: User }) => {
                               rows={2}
                               defaultValue={user.introduction}/>
                 </div>
-                <Input id="password" type="password" name="비밀번호" maxLength={15}/>
-                <Input id="passwordConfirm" type="password" name="비밀번호 확인" maxLength={15} />
+                <Input id="password" type="password" labelName="비밀번호" maxLength={15}/>
+                <Input id="passwordConfirm" type="password" labelName="비밀번호 확인" maxLength={15} />
             </div>
             <Button className="w-full py-2" value="수정" />
         </form>

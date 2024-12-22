@@ -3,7 +3,7 @@ import {InputProps} from "@/types/inputProps";
 const InputComponent = ({
                             id,
                             type,
-                            name,
+                            labelName,
                             defaultValue,
                             value,
                             className,
@@ -11,15 +11,14 @@ const InputComponent = ({
                             maxLength,
                             required,
                             placeholder,
-                            onChange
+                            onChange,
                         }: InputProps) => {
     return <div className="flex flex-col gap-1 items-start w-full">
         <label htmlFor={id}>
-            <span className="font-bold px-1 text-lg">{name}</span>
+            <span className="font-bold px-1 text-lg">{labelName}</span>
             {required && <span className="text-sm text-red-700">*</span>}
         </label>
         <input type={type} id={id} className={`border border-gray-200 rounded-lg px-4 py-1.5 w-full ${className}`}
-               name={name}
                defaultValue={defaultValue}
                value={value}
                disabled={disabled}
@@ -30,5 +29,9 @@ const InputComponent = ({
         />
     </div>
 }
+
+/**
+ * const register: <"email">(name: "email", options?: RegisterOptions<SignUpProps, "email"> | undefined) => UseFormRegisterReturn<"email">
+ */
 
 export default InputComponent;
