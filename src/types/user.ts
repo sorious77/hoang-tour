@@ -7,6 +7,7 @@ export type User = {
 
 export type SignUpProps = {
     email: string;
+    nickname: string;
     password: string;
     passwordConfirm: string;
 }

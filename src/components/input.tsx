@@ -30,8 +30,4 @@ const InputComponent = ({
     </div>
 }
 
-/**
- * const register: <"email">(name: "email", options?: RegisterOptions<SignUpProps, "email"> | undefined) => UseFormRegisterReturn<"email">
- */
-
 export default InputComponent;

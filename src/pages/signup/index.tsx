@@ -2,6 +2,10 @@ import Button from "@/components/button";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {SignUpProps} from "@/types/user";
 import TooltipComponent from "@/components/tooltip";
+import {useRouter} from "next/navigation";
+import axios from "axios";
+import apiClient from "@/lib/apiClient";
+import ApiError from "@/types/apiError";
 
 const Page = () => {
     const {
@@ -10,13 +14,26 @@ const Page = () => {
         formState: {errors}
     } = useForm<SignUpProps>()
 
-    const onSubmit: SubmitHandler<SignUpProps> = data => {
+    const router = useRouter();
+
+    const onSubmit: SubmitHandler<SignUpProps> = async data => {
         if (data.password !== data.passwordConfirm) {
             alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
             return;
         }
+        try {
+            await apiClient.post("/api/v1/members", {...data});
 
-        alert("회원가입 성공!")
+            alert("회원가입에 성공했습니다.")
+            router.push("/signin")
+        } catch (e) {
+            if (e instanceof ApiError) {
+                alert(e.description);
+            } else {
+                // 네트워크 또는 기타 Axios 에러
+                alert("회원 가입 중 에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
+            }
+        }
     };
 
     return <div className="w-96">
@@ -38,6 +55,28 @@ const Page = () => {
                            pattern: {
                                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                                message: "이메일 형식이 올바르지 않습니다."
+                           }
+                       })}
+                />
+            </div>
+            <div className="flex flex-col gap-1 items-start w-full">
+                <label htmlFor="nickname">
+                    <div>
+                        <span className="font-bold px-1 text-lg">닉네임</span>
+                        <span className="text-sm text-red-700">*</span>
+                        <TooltipComponent message="닉네임은 2자 이상 30자 이하, 숫자를 제외하고 영문/특수문자(_, .)를 최소 하나 이상씩을 포함해야 합니다."/>
+                    </div>
+                </label>
+                <div className="text-sm text-red-700 ml-2 text-left">{errors.password?.message}</div>
+                <input type="text" id="text" required placeholder="닉네임을 입력하세요."
+                       className="border border-gray-200 rounded-lg px-4 py-1.5 w-full"
+                       minLength={2}
+                       maxLength={30}
+                       {...register("nickname", {
+                           required: true,
+                           pattern: {
+                               value: /^(?=.*[a-z_.])[a-z0-9_.]{2,30}$/,
+                               message: "닉네임은 2자 이상 30자 이하, 숫자를 제외하고 영문/특수문자(_, .)를 최소 하나 이상씩을 포함해야 합니다."
                            }
                        })}
                 />
