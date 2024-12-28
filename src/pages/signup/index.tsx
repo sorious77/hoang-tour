@@ -3,7 +3,6 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {SignUpProps} from "@/types/user";
 import TooltipComponent from "@/components/tooltip";
 import {useRouter} from "next/navigation";
-import axios from "axios";
 import apiClient from "@/lib/apiClient";
 import ApiError from "@/types/apiError";
 
@@ -16,7 +15,7 @@ const Page = () => {
 
     const router = useRouter();
 
-    const onSubmit: SubmitHandler<SignUpProps> = async data => {
+    const onSubmit: SubmitHandler<SignUpProps> = async (data) => {
         if (data.password !== data.passwordConfirm) {
             alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
             return;

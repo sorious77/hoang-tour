@@ -11,3 +11,8 @@ export type SignUpProps = {
     password: string;
     passwordConfirm: string;
 }
+
+export type SignInProps = {
+    email: string;
+    password: string;
+}
