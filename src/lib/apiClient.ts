@@ -19,6 +19,13 @@ apiClient.interceptors.request.use((config) => {
 
 apiClient.interceptors.response.use(
     (response) => {
+        if (response.config.url === "/api/v1/members/signIn" && response.data?.data?.token) {
+            // cookie setting
+            const {data: {data: {token}}} = response;
+
+            document.cookie = `token=${token}; path=/; max-age=3600; SameSite=Strict`;
+        }
+
         const result: BaseResponse<any> = response.data;
 
         // `code` 값이 1000이 아닌 경우 에러 처리
