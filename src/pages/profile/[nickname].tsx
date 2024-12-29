@@ -4,6 +4,7 @@ import {IoHeart} from "react-icons/io5";
 import {LiaCommentAltSolid} from "react-icons/lia";
 import HorizonLine from "@/components/horizonLine";
 import Link from "next/link";
+import {User} from "@/types/user";
 
 const Profile = ({user}: { user: User }) => {
 

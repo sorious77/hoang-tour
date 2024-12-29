@@ -7,6 +7,6 @@ type ButtonProps = {
     type?: Type
 }
 
-type Variant = "primary" | "outline"
+type Variant = "primary" | "outline" | "none"
 
 type Type = "submit" | "reset" | "button"

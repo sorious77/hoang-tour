@@ -4,14 +4,15 @@ import {
     CircleUserRoundIcon,
     CompassIcon,
     MapIcon,
-    SquarePenIcon
+    SquarePenIcon,
+    DoorOpenIcon
 } from "lucide-react";
-import React from "react";
+import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import Button from "@/components/button";
 
 const Navbar = ({children}: { children: React.ReactNode }) => {
-    const isLogin = false // TODO isLogin 처리
+    const [isLogin, setIsLogin] = useState(true) // TODO isLogin 처리
 
     const router = useRouter();
 
@@ -57,6 +58,13 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                         </Link>
                     </nav>
                 </div>
+                <div
+                    className="mb-10 w-full sm:px-4 lg:px-7 font-medium flex items-center gap-3 rounded-lg py-2 transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50 cursor-pointer"
+                    onClick={() => setIsLogin(false)}
+                >
+                    <DoorOpenIcon />
+                    <span className="hidden lg:inline">로그아웃</span>
+                </div>
                 {/*<div className="h-[80px] grid items-start px-4">*/}
                 {/*    <div*/}
                 {/*        className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50">*/}
@@ -76,7 +84,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                         <div className="flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
                             <div className="ml-auto flex-1 sm:flex-initial flex gap-4">
                                 <Button value="로그인" onClick={() => router.push("/signin")}/>
-                                <Button value="가입하기" variant="outline"  onClick={() => router.push("/signup")}/>
+                                <Button value="가입하기" variant="none" onClick={() => router.push("/signup")}/>
                             </div>
                         </div>
                     }
