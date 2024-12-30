@@ -5,6 +5,14 @@ export type User = {
     introduction: string;
 }
 
+export type Profile = {
+    nickname: string,
+    introduction: string,
+    review: any[],
+    totalFollwerCount: number,
+    totalFollowingCount: number
+}
+
 export type SignUpProps = {
     email: string;
     nickname: string;
