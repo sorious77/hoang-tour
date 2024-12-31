@@ -1,8 +1,10 @@
 export type User = {
     email: string;
     nickname: string;
-    profileImage: string;
+    profileImage: string | null;
     introduction: string;
+    accessToken: string;
+    refreshToken: string;
 }
 
 export type Profile = {

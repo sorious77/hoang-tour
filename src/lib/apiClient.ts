@@ -10,16 +10,18 @@ const apiClient = axios.create({
 })
 
 apiClient.interceptors.request.use((config) => {
-    config.headers["Access-Control-Allow-Origin"] = "*";
-    config.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization";
-    config.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE";
+    if (typeof window !== "undefined") {
+        config.headers["Access-Control-Allow-Origin"] = "*";
+        config.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization";
+        config.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE";
+    }
 
     return config;
 })
 
 apiClient.interceptors.response.use(
     (response) => {
-        if (response.config.url === "/api/v1/members/signIn" && response.data?.data?.token) {
+        if (typeof window !== "undefined" && response.config.url === "/api/v1/members/signIn" && response.data?.data?.token) {
             // cookie setting
             const {data: {data: {token}}} = response;
 

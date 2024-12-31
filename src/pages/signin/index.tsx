@@ -1,14 +1,12 @@
-import Input from "@/components/input";
-import PasswordInput from "@/components/passwordInput";
 import Button from "@/components/button";
-import {ChangeEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {SubmitHandler, useForm, useWatch} from "react-hook-form";
 import {SignInProps} from "@/types/user";
-import TooltipComponent from "@/components/tooltip";
 import ApiError from "@/types/apiError";
 import apiClient from "@/lib/apiClient";
+import {signIn} from "next-auth/react";
 
-const Page = () => {
+const Page = ({providers}: { providers: any }) => {
     const {
         register,
         control,
@@ -30,10 +28,7 @@ const Page = () => {
 
     const onSubmit: SubmitHandler<SignInProps> = async (data) => {
         try {
-            console.log("hihi")
-            const result = await apiClient.post("/api/v1/members/signIn", {...data});
-
-            console.log(result);
+            await signIn("credentials", {callbackUrl: "/", email: data.email, password: data.password});
         } catch (e) {
             if (e instanceof ApiError) {
                 console.log(e);

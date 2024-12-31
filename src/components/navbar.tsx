@@ -7,12 +7,19 @@ import {
     SquarePenIcon,
     DoorOpenIcon
 } from "lucide-react";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import Button from "@/components/button";
+import {signOut, useSession} from "next-auth/react";
 
 const Navbar = ({children}: { children: React.ReactNode }) => {
     const [isLogin, setIsLogin] = useState(true) // TODO isLogin 처리
+
+    const {data: session, status} = useSession();
+
+    useEffect(() => {
+        console.log(`session: ${session}, status: ${status}`);
+    }, [session, status])
 
     const router = useRouter();
 
@@ -22,7 +29,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                 className="hidden md:flex flex-col gap-2 md:items-center lg:items-start fixed md:w-[50px] lg:w-[230px] bg-gray-100/40 dark:bg-gray-800/40 border-r min-h-screen">
                 <div className="flex h-[80px] items-center px-6">
                     <Link className="flex items-center gap-2 font-semibold" href="/">
-                        <span className="hidden lg:inline text-2xl">Hoang Tour2</span>
+                        <span className="hidden lg:inline text-2xl">Hoang Tour</span>
                         <BaggageClaimIcon className="w-6 h-6 lg:hidden md:inline"/>
                     </Link>
                 </div>
@@ -58,20 +65,16 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                         </Link>
                     </nav>
                 </div>
-                <div
-                    className="mb-10 w-full sm:px-4 lg:px-7 font-medium flex items-center gap-3 rounded-lg py-2 transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50 cursor-pointer"
-                    onClick={() => setIsLogin(false)}
-                >
-                    <DoorOpenIcon />
-                    <span className="hidden lg:inline">로그아웃</span>
-                </div>
-                {/*<div className="h-[80px] grid items-start px-4">*/}
-                {/*    <div*/}
-                {/*        className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50">*/}
-                {/*        <MenuIcon/>*/}
-                {/*        <span className="hidden lg:inline">더보기</span>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                {
+                    session &&
+                    <div
+                        className="mb-10 w-full sm:px-4 lg:px-7 font-medium flex items-center gap-3 rounded-lg py-2 transition-all hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-50 cursor-pointer"
+                        onClick={() => signOut({redirect: true})}
+                    >
+                        <DoorOpenIcon/>
+                        <span className="hidden lg:inline">로그아웃</span>
+                    </div>
+                }
             </div>}
             <div
                 className={`flex flex-col w-full h-full ${isLogin && "md:w-screen-minus-50 lg:w-screen-minus-230 md:left-[50px] lg:left-[230px]"} absolute top-0 overflow-x-hidden`}>
@@ -80,7 +83,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                     <div className="flex-1">
                         <h1 className="font-semibold text-lg hidden lg:block">Hoang Tour</h1>
                     </div>
-                    {isLogin ||
+                    {!session &&
                         <div className="flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
                             <div className="ml-auto flex-1 sm:flex-initial flex gap-4">
                                 <Button value="로그인" onClick={() => router.push("/signin")}/>

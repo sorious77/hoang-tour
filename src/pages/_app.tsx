@@ -2,6 +2,7 @@ import Layout from "@/components/layout";
 import "@/styles/globals.css";
 import type {AppProps} from "next/app";
 import {NavermapsProvider} from 'react-naver-maps';
+import {SessionProvider} from "next-auth/react";
 
 
 export default function App({Component, pageProps}: AppProps) {
@@ -9,9 +10,11 @@ export default function App({Component, pageProps}: AppProps) {
 
     return (
         <NavermapsProvider ncpClientId={ncpClientId}>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+            <SessionProvider session={pageProps.session}>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </SessionProvider>
         </NavermapsProvider>
     );
 }
