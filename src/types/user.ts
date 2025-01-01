@@ -8,6 +8,7 @@ export type User = {
 }
 
 export type Profile = {
+    email: string,
     nickname: string,
     introduction: string,
     review: any[],

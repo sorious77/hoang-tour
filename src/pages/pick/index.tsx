@@ -85,7 +85,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
 
         const accessToken = session.user.accessToken;
-        console.log(session.user)
 
         const lines: Line[] = await apiClient.get("/api/v1/lines/list",
             {
