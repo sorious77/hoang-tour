@@ -1,9 +1,9 @@
-import NextAuth, {Session, User} from "next-auth";
+import NextAuth, {NextAuthOptions, Session, User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import apiClient from "@/lib/apiClient";
 import {JWT} from "next-auth/jwt";
 
-export default NextAuth({
+export const nextAuthOption: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Custom Server",
@@ -65,4 +65,6 @@ export default NextAuth({
         signIn: "/signin"
     },
     secret: process.env.JWT_SECRET
-});
+};
+
+export default NextAuth(nextAuthOption);

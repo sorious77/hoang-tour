@@ -7,7 +7,7 @@ import Button from "@/components/button";
 import {useRouter} from "next/navigation";
 
 const Profile = ({user}: { user: Profile }) => {
-    const router= useRouter();
+    const router = useRouter();
 
     const profileImage = "https://item.kakaocdn.net/do/ed9bfa677367ed21c2895cf3c5ed68b4d0bbab1214a29e381afae56101ded106";
 
@@ -57,7 +57,8 @@ const Profile = ({user}: { user: Profile }) => {
                         {/*</div>*/}
                     </div>)) : <div className="col-end-3 flex flex-col gap-5 items-center">
                     작성한 리뷰가 없습니다.
-                    <Button value="리뷰 작성하기" className="w-1/2 py-2" variant="outline" onClick={() => router.push("/review/write")}/>
+                    <Button value="리뷰 작성하기" className="w-1/2 py-2" variant="outline"
+                            onClick={() => router.push("/review/write")}/>
                 </div>}
             </div>
         </div>

@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import {SubmitHandler, useForm, useWatch} from "react-hook-form";
 import {SignInProps} from "@/types/user";
 import ApiError from "@/types/apiError";
-import apiClient from "@/lib/apiClient";
 import {signIn} from "next-auth/react";
 
 const Page = ({providers}: { providers: any }) => {

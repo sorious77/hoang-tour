@@ -3,15 +3,18 @@ import axios from "axios";
 import Article from "@/components/article";
 import {FaRegPenToSquare} from "react-icons/fa6";
 import Link from "next/link";
+import apiClient from "@/lib/apiClient";
 
 const Page = () => {
     const [articles, setArticles] = useState<Article[] | null>(null)
 
     useEffect(() => {
         (async () => {
-            const {data} = await axios.get("/api/article/list")
+            const {data} = await apiClient.get("/api/article/list");
 
-            setArticles(data);
+            if(data) {
+                setArticles(data);
+            }
         })()
     }, []);
 
