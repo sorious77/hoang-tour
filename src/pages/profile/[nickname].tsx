@@ -1,6 +1,5 @@
 import {GetServerSideProps} from "next";
 import HorizonLine from "@/components/horizonLine";
-import Link from "next/link";
 import {Profile} from "@/types/user";
 import apiClient from "@/lib/apiClient";
 import Button from "@/components/button";
@@ -90,8 +89,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         const session = await getServerSession(context.req, context.res, nextAuthOption);
 
         if (!user) {
-            console.log("no user")
-
             return {
                 redirect: {
                     destination: "/profile/404",

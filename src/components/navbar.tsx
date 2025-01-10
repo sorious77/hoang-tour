@@ -26,7 +26,7 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                 router.push("/signin");
             }
         }
-    }, [router, session, status])
+    }, [router, session, status]);
 
     return (
         <div className="grid min-h-screen w-full relative">
