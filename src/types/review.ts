@@ -14,3 +14,10 @@ type ReviewImage = {
     imageUrl: string;
     order: number;
 }
+
+export type ReviewProps = {
+    title: string;
+    contents: string;
+    stationName: string;
+    images: File[];
+}

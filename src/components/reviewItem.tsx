@@ -7,12 +7,6 @@ import {useEffect} from "react";
 import {formatRelativeTime} from "@/lib/utils";
 
 const ReviewItem = (review: Review) => {
-    useEffect(() => {
-        // console.log(review.reviewImageList)
-        console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
-
-    }, [])
-
     return <div className="w-full sm:w-5/6 lg:w-2/3 flex flex-col gap-2 mb-6">
         <div className="flex justify-between items-center">
             <div className="flex items-center gap-2 w-1/2">

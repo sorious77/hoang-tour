@@ -82,9 +82,6 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                 className={`flex flex-col w-full h-full ${status === "authenticated" && "md:w-screen-minus-50 lg:w-screen-minus-230 md:left-[50px] lg:left-[230px]"} absolute top-0 overflow-x-hidden`}>
                 <header
                     className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-2 lg:px-6 dark:bg-gray-800/40">
-                    <div className="flex-1">
-                        <h1 className="font-semibold text-lg hidden lg:block">Hoang Tour</h1>
-                    </div>
                     {status === "unauthenticated" &&
                         <div className="flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
                             <div className="ml-auto flex-1 sm:flex-initial flex gap-4">
@@ -102,6 +99,9 @@ const Navbar = ({children}: { children: React.ReactNode }) => {
                         </div>
                     </section>
                 </main>
+                <div className="fixed flex items-center justify-center bg-white border-t border-t-gray-200 h-10 w-full md:hidden bottom-0">
+
+                </div>
             </div>
         </div>
     )

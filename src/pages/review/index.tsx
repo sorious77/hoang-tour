@@ -21,7 +21,7 @@ const Page = ({reviews}: { reviews: Review[] | null }) => {
                     onClick={() => router.push("/review/write")}/>
         </div>}
         <Link href="/review/write"
-              className="fixed bottom-10 right-20 border-2 border-gray-600 rounded-full p-3 cursor-pointer hover:text-gray-500 hover:border-gray-500">
+              className="fixed bottom-20 right-5 md:right-20 border-2 border-gray-600 rounded-full p-3 cursor-pointer hover:text-gray-500 hover:border-gray-500">
             <FaRegPenToSquare className="w-6 h-6"/>
         </Link>
     </div>
