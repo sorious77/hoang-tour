@@ -86,19 +86,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
         const accessToken = session.user.accessToken;
 
-        const lines: Line[] = await apiClient.get("/api/v1/lines/list",
+        let lines: Line[] = await apiClient.get("/api/v1/lines/list",
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
 
-        const stations: Station[] = await apiClient.get("/api/v1/stations/lines",
+        lines = lines.sort((a, b) => {
+            if (a.lineName < b.lineName) return -1;
+            if (a.lineName > b.lineName) return 1;
+            else return 0;
+        })
+
+        let stations: Station[] = await apiClient.get("/api/v1/stations/lines",
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
+
+        stations = stations.sort((a, b) => {
+            if (a.stationName < b.stationName) return -1;
+            if (a.stationName > b.stationName) return 1;
+            else return 0;
+        })
 
         return {
             props: {
@@ -106,7 +118,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 stations
             }
         }
-    } catch (e) {
+    } catch
+        (e) {
         const message = (e instanceof ApiError) ? e.description : "처리 중 에러가 발생했습니다. 잠시 후 다시 시도해주세요.";
 
         return {
