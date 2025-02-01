@@ -66,7 +66,7 @@ const Page = () => {
                         <TooltipComponent message="닉네임은 2자 이상 30자 이하, 숫자를 제외하고 영문/특수문자(_, .)를 최소 하나 이상씩을 포함해야 합니다."/>
                     </div>
                 </label>
-                <div className="text-sm text-red-700 ml-2 text-left">{errors.password?.message}</div>
+                <div className="text-sm text-red-700 ml-2 text-left">{errors.nickname?.message}</div>
                 <input type="text" id="text" required placeholder="닉네임을 입력하세요."
                        className="border border-gray-200 rounded-lg px-4 py-1.5 w-full"
                        minLength={2}
