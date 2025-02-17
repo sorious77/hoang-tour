@@ -4,11 +4,16 @@ import {getServerSession} from "next-auth";
 import {nextAuthOption} from "@/pages/api/auth/[...nextauth]";
 import {Review} from "@/types/review";
 import ReviewItem from "@/components/reviewItem";
+import {FaArrowLeft} from "react-icons/fa6";
+import Link from "next/link";
 
 const Page = ({review}: { review: Review }) => {
-    return <>
-        <ReviewItem review={review} isListView={false} />
-    </>
+    return <div className="w-full flex flex-col items-center">
+        <Link href="/review" className="w-full sm:w-5/6 lg:w-2/3 text-2xl mb-6">
+            <FaArrowLeft />
+        </Link>
+        <ReviewItem review={review} isListView={false}/>
+    </div>
 }
 
 export default Page;
