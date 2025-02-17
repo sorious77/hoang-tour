@@ -12,9 +12,9 @@ import {useRouter} from "next/router";
 const Page = ({reviews}: { reviews: Review[] | null }) => {
     const router = useRouter();
 
-    return <div className="flex flex-col items-center">
+    return <div className="flex flex-col items-center w-full">
         {reviews ? reviews.map(review => (
-            <ReviewItem {...review} key={review.reviewId}/>
+            <ReviewItem review={review} isListView key={review.reviewId}/>
         )) : <div className="flex flex-col">
             <div className="mb-4">작성된 리뷰가 없습니다.</div>
             <Button value="리뷰 작성하기" className="py-2" variant="outline"
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         const session = await getServerSession(context.req, context.res, nextAuthOption);
 
-        const reviews = await apiClient.get(`/api/v1/reviews/list/${0}`,
+        const reviews: Review[] = await apiClient.get(`/api/v1/reviews/list/${0}`,
             {
                 headers: {
                     Authorization: `Bearer ${session?.user.accessToken}`

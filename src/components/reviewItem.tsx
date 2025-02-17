@@ -5,8 +5,14 @@ import HorizonLine from "@/components/horizonLine";
 import {Review} from "@/types/review";
 import {useEffect} from "react";
 import {formatRelativeTime} from "@/lib/utils";
+import Link from "next/link";
 
-const ReviewItem = (review: Review) => {
+interface Props {
+    review: Review,
+    isListView: boolean
+}
+
+const ReviewItem = ({review, isListView}: Props) => {
     return <div className="w-full sm:w-5/6 lg:w-2/3 flex flex-col gap-2 mb-6">
         <div className="flex justify-between items-center">
             <div className="flex items-center gap-2 w-1/2">
@@ -20,15 +26,32 @@ const ReviewItem = (review: Review) => {
             </div>
             <IoEllipsisHorizontalSharp/>
         </div>
-        <div>
-            <SkeletonImage skeletonClassName="w-full aspect-square"
-                           imgClassName="w-full aspect-square rounded-lg border-gray-200 border"
-                           alt="호엥"
-                           src={review.reviewImageList[0].imageUrl}/>
-        </div>
-        <div className="text-left px-1 break-all overflow-hidden line-clamp-1 overflow-ellipsis mb-2">
-            {review.contents}
-        </div>
+        {isListView ?
+            <Link href={`/review/${review.reviewId}`}>
+                <div className="mb-2">
+                    <SkeletonImage skeletonClassName="w-full aspect-square"
+                                   imgClassName="w-full aspect-square rounded-lg border-gray-200 border"
+                                   alt="리뷰 이미지"
+                                   src={review.reviewImageList[0].imageUrl}/>
+                </div>
+                <div className="text-left px-1 break-all overflow-hidden line-clamp-1 overflow-ellipsis mb-2">
+                    {review.contents}
+                </div>
+            </Link>
+            :
+            <>
+                <div>
+                    <SkeletonImage skeletonClassName="w-full aspect-square"
+                                   imgClassName="w-full aspect-square rounded-lg border-gray-200 border"
+                                   alt="리뷰 이미지"
+                                   src={review.reviewImageList[0].imageUrl}/>
+                </div>
+                <div className="text-left px-1 break-all overflow-hidden line-clamp-1 overflow-ellipsis mb-2">
+                    {review.contents}
+                </div>
+            </>
+        }
+
         {/*<div className="flex justify-between text-2xl">*/}
         {/*    <div className="flex w-1/4 justify-between">*/}
         {/*        <div className="cursor-pointer hover:text-gray-400 transition-colors duration-100 ease-in-out">*/}
@@ -48,7 +71,7 @@ const ReviewItem = (review: Review) => {
         {/*        <div>댓글달기...</div>*/}
         {/*    </div>*/}
         {/*</div>*/}
-        <HorizonLine/>
+        {isListView && <HorizonLine/>}
     </div>
 }
 
