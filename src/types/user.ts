@@ -1,4 +1,5 @@
 export type User = {
+    memberId: number;
     email: string;
     nickname: string;
     profileImage: string | null;

@@ -11,7 +11,7 @@ export const nextAuthOption: NextAuthOptions = {
                 email: {label: "Email", type: "email"},
                 password: {label: "Password", type: "password"},
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 try {
                     if (!credentials) return null;
 
@@ -45,6 +45,7 @@ export const nextAuthOption: NextAuthOptions = {
                 token.email = user.email;
                 token.nickname = user.nickname;
                 token.introduction = user.introduction;
+                token.memberId = user.memberId;
             }
             return token;
         },
@@ -56,7 +57,8 @@ export const nextAuthOption: NextAuthOptions = {
                 email: token.email as string,
                 nickname: token.nickname as string,
                 profileImage: (token.profileImage || "") as string,
-                introduction: token.introduction as string
+                introduction: token.introduction as string,
+                memberId: token.memberId as number
             };
 
             return session;

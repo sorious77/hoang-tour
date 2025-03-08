@@ -1,265 +1,250 @@
-import React, {useEffect, useState} from "react";
+"use client";
+
+import {useState, useEffect, useCallback} from "react";
 import Button from "@/components/button";
-import {GetServerSideProps} from "next";
-import {getServerSession} from "next-auth";
-import {nextAuthOption} from "@/pages/api/auth/[...nextauth]";
 import apiClient from "@/lib/apiClient";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {ReviewProps} from "@/types/review";
 import {useSession} from "next-auth/react";
+import {GetServerSideProps} from "next";
+import {getServerSession} from "next-auth";
+import {nextAuthOption} from "@/pages/api/auth/[...nextauth]";
+import {useRouter} from "next/navigation";
 
-interface PageProps {
-    stations: Station[],
-    email: string,
-    message: string | null
+interface Station {
+    stationId: string;
+    stationName: string;
 }
 
-const Page = ({stations, email}: PageProps) => {
+interface PageProps {
+    stations: Station[];
+    email: string;
+    memberId: string;
+}
+
+const Page = ({stations, email, memberId}: PageProps) => {
+    const {register, handleSubmit, formState: {errors}, setValue, watch} = useForm<ReviewProps>();
+    const session = useSession();
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [dropdown, setDropdown] = useState(false);
-    const [station, setStation] = useState<string>("");
+    const [station, setStation] = useState("");
+    const [filteredStations, setFilteredStations] = useState<Station[]>(stations);
 
-    const [filteredStations, setFilteredStations] = useState<Station[]>([]);
-    const member = useSession();
+    const images = watch("images");
 
-    const {
-        register,
-        handleSubmit,
-        formState: {errors},
-        setValue,
-        watch
-    } = useForm<ReviewProps>();
+    const router = useRouter();
 
+    // 이미지 파일 URL 업데이트
+    useEffect(() => {
+        if (!images?.length) return;
+        setImageUrls(Array.from(images).map(file => URL.createObjectURL(file)));
+    }, [images]);
+
+    // 6장 이상 업로드 방지
     useEffect(() => {
         if (imageUrls.length > 6) {
-            setImageUrls(prev => prev.slice(0, 6))
+            setImageUrls(prev => prev.slice(0, 6));
             alert("사진은 최대 6장까지 업로드 가능합니다.");
         }
     }, [imageUrls]);
 
+    // 역 이름 검색 필터링
     useEffect(() => {
-        if (station.length) {
-            setFilteredStations(
-                stations.filter(st => st.stationName.includes(station))
-            )
+        setFilteredStations(
+            station.trim() ? stations?.filter(st => st.stationName.includes(station)) : stations
+        );
+    }, [station, stations]);
+
+    // 드롭다운 핸들링 (버그 해결)
+    const handleStationChange = useCallback((value: string) => {
+        setStation(value);
+        if (value.trim()) {
+            setDropdown(true);
         } else {
-            setFilteredStations(stations)
+            setDropdown(false);
         }
-    }, [station]);
+    }, []);
 
-    const images = watch("images");
-    useEffect(() => {
-        if (images?.length > 0) {
-            let urls: string[] = [];
-
-            Array.from(images).forEach(image => {
-                urls.push(URL.createObjectURL(image));
-            })
-
-            setImageUrls(urls);
-        }
-    }, [images]);
-
-    const handleFileRemove = (targetUrl: string) => {
-        setImageUrls(prev => prev.filter((url) => url !== targetUrl));
-    }
-
-    const handleDropdown = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-        setDropdown(prev => !prev);
-    }
-
-    const handleStation = (stationName: string) => {
-        setValue("stationName", stationName);
-        setStation(stationName);
+    const handleStationSelect = useCallback((selected: string) => {
+        setValue("stationName", selected);
+        setStation(selected);
         setDropdown(false);
-        console.log(station);
-    }
+    }, [setValue]);
 
+    const handleFileRemove = useCallback((targetUrl: string) => {
+        setImageUrls(prev => prev.filter(url => url !== targetUrl));
+    }, []);
+
+    // 리뷰 저장 핸들러
     const onSubmit: SubmitHandler<ReviewProps> = async (data) => {
-        if (!confirm("저장하시겠습니까? 저장 이후엔 수정이 불가능합니다.")) {
-            return;
-        }
+        if (!confirm("저장하시겠습니까? 저장 이후엔 수정이 불가능합니다.")) return;
+
+        const targetStation = stations.filter(item => item.stationName === station)[0];
 
         const formData = new FormData();
-
-        Array.from(data.images).forEach(file => {
-            formData.append("imageList", file);
-        })
+        Array.from(data.images).forEach(file => formData.append("imageList", file));
 
         formData.append("title", data.title);
         formData.append("contents", data.contents);
-        formData.append("memberId", "11");
+        formData.append("memberId", memberId);
         formData.append("email", email);
-        formData.append("stationId", "17");
+        formData.append("stationId", targetStation.stationId);
         formData.append("stationName", data.stationName);
 
         try {
-            const result = await apiClient.post("/api/v1/reviews",
-                formData
-                , {
-                    headers: {
-                        Authorization: `Bearer ${member.data?.user.accessToken}`
-                    }
-                });
+            await apiClient.post("/api/v1/reviews", formData, {
+                headers: {Authorization: `Bearer ${session.data?.user.accessToken}`}
+            });
 
-            console.log(result);
+            router.push("/review");
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
-    }
+    };
 
-    return <div className="flex flex-col w-full pb-10 -mt-2">
-        {/* 제목, 방문 날짜, 내용, 이미지 6장까지 */}
-        <form className="w-full flex gap-5 flex-col" onSubmit={handleSubmit(onSubmit)}>
-            <Button
-                className="sticky self-end top-2 px-2 py-1 mr-2 w-16"
-                value="저장"
-                type="submit"
-            />
-            <div className="w-full flex flex-col">
-                <input id="title" className="border-b border-gray-200 px-4 py-1.5 w-full text-3xl focus:outline-none"
-                       type="text"
-                       placeholder="제목"
-                       {...register("title", {
-                           required: {
-                               value: true,
-                               message: "제목은 5자 이상 30자 이하로 입력해주세요"
-                           },
-                           minLength: {
-                               value: 5,
-                               message: "제목은 5자 이상 30자 이하로 입력해주세요"
-                           }
-                       })}
-                />
-                <div className="text-left px-2 mt-2 text-sm text-red-700">{errors?.title?.message}</div>
-            </div>
-            <div className="flex flex-col border border-gray-200 rounded-lg relative">
-                <div className="flex w-full">
-                    <input id="station" className="px-4 py-1.5 w-11/12 rounded-lg focus:outline-none"
-                           type="text"
-                           placeholder="역 이름"
-                           value={station}
-                           onFocus={() => setDropdown(true)}
-                           {...register("stationName",
-                               {
-                                   onBlur: () => setDropdown(false),
-                                   onChange: (e) => {
-                                       setValue("stationName", e.target.value)
-                                       setStation(e.target.value);
-                                   }
-                               }
-                           )}
+    return (
+        <div className="flex flex-col w-full pb-10 -mt-2">
+            <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+                <Button className="sticky self-end top-2 px-2 py-1 mr-2 w-16" value="저장" type="submit"/>
+
+                {/* 제목 입력 */}
+                <div className="w-full flex flex-col">
+                    <input
+                        id="title"
+                        className="border-b border-gray-200 px-4 py-1.5 w-full text-3xl focus:outline-none"
+                        placeholder="제목"
+                        {...register("title", {
+                            required: "제목은 5자 이상 30자 이하로 입력해주세요",
+                            minLength: {value: 5, message: "제목은 5자 이상 30자 이하로 입력해주세요"}
+                        })}
                     />
-                    <button className="text-right w-1/12 pr-4" onClick={handleDropdown}>▼</button>
+                    <div className="text-sm text-red-700 px-2 mt-2">{errors?.title?.message}</div>
                 </div>
 
-                {(dropdown && filteredStations.length > 0) &&
-                    <div
-                        className="absolute z-10 bg-white text-left px-2 py-2 top-11 max-h-40 overflow-y-scroll w-full border border-gray-200 rounded-lg">
-                        {filteredStations.map((station => (
-                            <div key={station.stationId}
-                                 className="px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-lg"
-                                 onClick={() => {
-                                     setValue("stationName", station.stationName);
-                                     setStation(station.stationName);
-                                     setDropdown(false);
-                                 }}
-                            >{station.stationName}</div>
-                        )))}
-                    </div>}
-            </div>
-            <div className="flex flex-col gap-1 items-start w-full">
-                <textarea id="contents"
-                          className="border border-gray-200 rounded-lg px-4 py-1.5 w-full resize-none focus:outline-none"
-                          placeholder="내용을 입력하세요."
-                          rows={20}
-                          {...register("contents", {
-                              required: {
-                                  value: true,
-                                  message: "내용을 입력하세요"
-                              },
-                              minLength: {
-                                  value: 10,
-                                  message: "내용을 10자 이상 1000자 이하로 입력하세요"
-                              },
-                              maxLength: {
-                                  value: 1000,
-                                  message: "내용을 10자 이상 1000자 이하로 입력하세요"
-                              }
-                          })}
-                />
-                <div className="text-left px-2 mt-2 text-sm text-red-700">{errors?.contents?.message}</div>
-            </div>
-            <div>
-                <div className="grid grid-cols-3 gap-3 mb-10 px-2">
-                    {imageUrls.map((url, i) => (
-                        <div key={url} className="relative">
-                            <img key={url} src={url} className="shadow rounded h-96 w-96" alt={`image${i}`}/>
-                            <div
-                                onClick={() => handleFileRemove(url)}
-                                className="absolute -right-2 -top-2 bg-gray-200 text-black cursor-pointer rounded-full w-6 h-6 flex justify-center items-center">X
-                            </div>
+                {/* 역 이름 입력 */}
+                <div className="relative flex flex-col border border-gray-200 rounded-lg">
+                    <div className="flex w-full">
+                        <input
+                            id="station"
+                            className="px-4 py-1.5 w-11/12 rounded-lg focus:outline-none"
+                            placeholder="역 이름"
+                            value={station}
+                            onFocus={() => setDropdown(true)}
+                            onChange={(e) => handleStationChange(e.target.value)}
+                        />
+                        <button
+                            className="text-right w-1/12 pr-4"
+                            type="button"
+                            onClick={() => setDropdown(prev => !prev)}
+                        >
+                            ▼
+                        </button>
+                    </div>
+
+                    {dropdown && filteredStations?.length > 0 && (
+                        <div
+                            className="absolute z-10 bg-white text-left px-2 py-2 top-11 max-h-40 overflow-y-scroll w-full border border-gray-200 rounded-lg"
+                            onMouseDown={(e) => e.preventDefault()} // 드롭다운 클릭 시 닫히는 문제 해결
+                        >
+                            {filteredStations.map(st => (
+                                <div
+                                    key={st.stationId}
+                                    className="px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-lg"
+                                    onClick={() => handleStationSelect(st.stationName)}
+                                >
+                                    {st.stationName}
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
                 </div>
-                <label htmlFor="file"
-                       className={`px-5 py-4 rounded-xl hover:cursor-pointer transition-colors ease-in-out
-                       ${imageUrls.length >= 6 ? "border-none bg-gray-400 text-white hover:bg-gray-400 hover:cursor-not-allowed" :
-                           "border border-amber-400 hover:bg-amber-400 hover:text-white text-amber-400"}`}>사진을
-                    추가해주세요</label>
-                <input className="absolute w-0 h-0 overflow-hidden border-none" type="file" id="file"
-                       multiple={true}
-                       disabled={imageUrls.length >= 6}
-                       accept="image/*"
-                       {...register("images")}
+
+                {/* 내용 입력 */}
+                <textarea
+                    id="contents"
+                    className="border border-gray-200 rounded-lg px-4 py-1.5 w-full resize-none focus:outline-none"
+                    placeholder="내용을 입력하세요."
+                    rows={20}
+                    {...register("contents", {
+                        required: "내용을 입력하세요",
+                        minLength: {value: 10, message: "내용을 10자 이상 1000자 이하로 입력하세요"},
+                        maxLength: {value: 1000, message: "내용을 10자 이상 1000자 이하로 입력하세요"}
+                    })}
                 />
-            </div>
-        </form>
-    </div>
-}
+                <div className="text-sm text-red-700 px-2 mt-2">{errors?.contents?.message}</div>
+
+                <div>
+                    <div className="grid grid-cols-3 gap-3 mb-10 px-2">
+                        {imageUrls.map(url => (
+                            <div key={url} className="relative">
+                                <img src={url} className="shadow rounded h-96 w-96" alt="image preview"/>
+                                <div
+                                    onClick={() => handleFileRemove(url)}
+                                    className="absolute -right-2 -top-2 bg-gray-200 text-black cursor-pointer rounded-full w-6 h-6 flex justify-center items-center">
+                                    X
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <label
+                        className={`px-5 py-4 rounded-xl cursor-pointer border ${imageUrls.length >= 6 ? "bg-gray-400 text-white cursor-not-allowed" : "border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-white"}`}>
+                        사진을 추가해주세요
+                        <input type="file" className="hidden" multiple accept="image/*" {...register("images")}
+                               disabled={imageUrls.length >= 6}/>
+                    </label>
+                </div>
+            </form>
+        </div>
+    );
+};
 
 export default Page;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
+        // 세션 가져오기 (사용자 인증 정보)
         const session = await getServerSession(context.req, context.res, nextAuthOption);
+        if (!session?.user?.accessToken) {
+            return {
+                redirect: {
+                    destination: "/login",
+                    permanent: false,
+                },
+            };
+        }
 
-        const stations: Station[] = await apiClient.get(`/api/v1/stations/lines`,
-            {
-                headers: {
-                    Authorization: `Bearer ${session?.user.accessToken}`
-                }
-            }
-        );
+        // API 요청 (역 정보 가져오기)
+        const stations: Station[] = await apiClient.get("/api/v1/stations/lines", {
+            headers: {
+                Authorization: `Bearer ${session.user.accessToken}`,
+            },
+        });
 
-        if (!stations) {
+        // 유효한 데이터인지 확인
+        if (!stations || stations.length === 0) {
             return {
                 redirect: {
                     destination: "/404",
                     permanent: false,
                 },
-            }
+            };
         }
 
         return {
             props: {
-                stations: stations.sort((a, b) => {
-                    if (a.stationName < b.stationName) return -1;
-                    if (a.stationName > b.stationName) return 1;
-                    return 0;
-                }),
-                email: session?.user.email,
-            }
-        }
-    } catch (e) {
-        console.error(e);
+                stations: stations.sort((a, b) => a.stationName.localeCompare(b.stationName)),
+                email: session.user.email,
+                memberId: session.user.memberId
+            },
+        };
+    } catch (error) {
+        console.error("Error fetching stations:", error);
 
         return {
             redirect: {
                 destination: "/404",
                 permanent: false,
             },
-        }
+        };
     }
-}
+};
