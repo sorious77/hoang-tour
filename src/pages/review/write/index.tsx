@@ -77,6 +77,10 @@ const Page = ({stations, email}: PageProps) => {
     }
 
     const onSubmit: SubmitHandler<ReviewProps> = async (data) => {
+        if (!confirm("저장하시겠습니까? 저장 이후엔 수정이 불가능합니다.")) {
+            return;
+        }
+
         const formData = new FormData();
 
         Array.from(data.images).forEach(file => {

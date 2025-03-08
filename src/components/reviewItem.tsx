@@ -1,11 +1,12 @@
-import {IoEllipsisHorizontalSharp, IoHeartOutline, IoBookmarkOutline, IoArrowRedoOutline} from "react-icons/io5";
-import {LiaCommentAltSolid} from "react-icons/lia";
+import {IoEllipsisHorizontalSharp} from "react-icons/io5";
 import {SkeletonImage} from "@/components/skeleton";
 import HorizonLine from "@/components/horizonLine";
 import {Review} from "@/types/review";
-import {useEffect} from "react";
+import React, {useState} from "react";
 import {formatRelativeTime} from "@/lib/utils";
 import Link from "next/link";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 interface Props {
     review: Review,
@@ -13,6 +14,12 @@ interface Props {
 }
 
 const ReviewItem = ({review, isListView}: Props) => {
+    const [dropdown, setDropdown] = useState(false);
+
+    const router = useRouter();
+
+    const {data: session} = useSession();
+
     return <div className="w-full sm:w-5/6 lg:w-2/3 flex flex-col gap-2 mb-6">
         <div className="flex justify-between items-center">
             <div className="flex items-center gap-2 w-1/2">
@@ -24,7 +31,18 @@ const ReviewItem = ({review, isListView}: Props) => {
                     <div className="text-gray-500 text-sm">{formatRelativeTime(review.insDate)}</div>
                 </div>
             </div>
-            <IoEllipsisHorizontalSharp/>
+            {session?.user.email === review.userEmail &&
+                <div className="relative">
+                    <IoEllipsisHorizontalSharp className="cursor-pointer" onClick={() => setDropdown(prev => !prev)}/>
+                    {dropdown &&
+                        <div
+                            className="absolute z-10 bg-white px-5 py-2 top-5 right-0 w-28 border border-gray-200 rounded-lg flex flex-col gap-2">
+                            {/*<button onClick={() => router.push(`/review/edit/${review.reviewId}`)}>수정하기</button>*/}
+                            {/*<HorizonLine/>*/}
+                            <button>삭제하기</button>
+                        </div>}
+                </div>
+            }
         </div>
         {isListView ?
             <Link href={`/review/${review.reviewId}`}>
