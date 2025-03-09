@@ -12,9 +12,14 @@ export type Profile = {
     email: string,
     nickname: string,
     introduction: string,
-    review: any[],
+    reviews: ProfileReview[],
     totalFollwerCount: number,
     totalFollowingCount: number
+}
+
+type ProfileReview = {
+    reviewId: number;
+    imageUrl: string;
 }
 
 export type SignUpProps = {
