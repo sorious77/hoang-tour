@@ -6,7 +6,7 @@ import React, {useState} from "react";
 import {formatRelativeTime} from "@/lib/utils";
 import Link from "next/link";
 import {useSession} from "next-auth/react";
-import {useRouter} from "next/navigation";
+import {ChevronLeft, ChevronRight} from "lucide-react";
 
 interface Props {
     review: Review,
@@ -15,10 +15,21 @@ interface Props {
 
 const ReviewItem = ({review, isListView}: Props) => {
     const [dropdown, setDropdown] = useState(false);
-
-    const router = useRouter();
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const {data: session} = useSession();
+
+    const nextPhoto = () => {
+        if (currentIndex < review.reviewImageList.length - 1) {
+            setCurrentIndex((prev) => prev + 1)
+        }
+    }
+
+    const prevPhoto = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex((prev => prev - 1));
+        }
+    }
 
     return <div className="w-full sm:w-5/6 lg:w-2/3 flex flex-col gap-2 mb-6">
         <div className="flex justify-between items-center">
@@ -58,11 +69,40 @@ const ReviewItem = ({review, isListView}: Props) => {
             </Link>
             :
             <>
-                <div>
-                    <SkeletonImage skeletonClassName="w-full aspect-square"
-                                   imgClassName="w-full aspect-square rounded-lg border-gray-200 border"
-                                   alt="리뷰 이미지"
-                                   src={review.reviewImageList[0].imageUrl}/>
+                <div className="relative w-full max-w-lg mx-auto mb-5">
+                    <div>
+                        <SkeletonImage skeletonClassName="w-full aspect-square"
+                                       imgClassName="w-full aspect-square rounded-lg border-gray-200 border"
+                                       alt="리뷰 이미지"
+                                       src={review.reviewImageList[currentIndex].imageUrl}/>
+
+                        {currentIndex > 0 && (
+                            <button
+                                onClick={prevPhoto}
+                                className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-700 text-white rounded-full p-2 opacity-75 hover:opacity-100">
+                                <ChevronLeft size={24}/>
+                            </button>
+                        )}
+
+                        {currentIndex < review.reviewImageList.length - 1 && (
+                            <button
+                                onClick={nextPhoto}
+                                className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-700 text-white rounded-full p-2 opacity-75 hover:opacity-100"
+                            >
+                                <ChevronRight size={24}/>
+                            </button>
+                        )}
+                    </div>
+
+                    <div
+                        className="absolute p-1 -bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                        {review.reviewImageList.map((_, index) => (
+                            <div
+                                key={index}
+                                className={`w-2 h-2 rounded-full ${index === currentIndex ? "bg-amber-400" : "bg-gray-200"}`}
+                            />
+                        ))}
+                    </div>
                 </div>
                 <div className="text-left px-1 break-all overflow-hidden line-clamp-1 overflow-ellipsis mb-2">
                     {review.contents}

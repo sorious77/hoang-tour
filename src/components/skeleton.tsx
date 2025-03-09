@@ -1,7 +1,9 @@
 import {cn} from "@/lib/utils";
 import {useState} from "react";
 
-const SkeletonImage = ({skeletonClassName, imgClassName, src, alt}: { skeletonClassName: string, imgClassName: string, src: string, alt: string }) => {
+const SkeletonImage = ({skeletonClassName, imgClassName, src, alt}: {
+    skeletonClassName: string, imgClassName: string, src: string, alt: string
+}) => {
     const [isLoaded, setIsLoaded] = useState(false)
 
     return <>{
@@ -10,7 +12,7 @@ const SkeletonImage = ({skeletonClassName, imgClassName, src, alt}: { skeletonCl
         </div>
     }
         <img src={src} alt={alt} onLoad={() => setIsLoaded(true)}
-            className={cn(imgClassName, isLoaded ? "block" : "hidden")}
+             className={cn(imgClassName, isLoaded ? "block" : "hidden")}
         />
     </>
 }
