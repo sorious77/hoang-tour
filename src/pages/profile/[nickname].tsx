@@ -40,10 +40,11 @@ const Profile = ({user, isCurrentUser}: { user: Profile, isCurrentUser: boolean 
         </div>
         <div className="mb-10 w-[400px] sm:w-[500px] md:w-[700px] lg:w-[850px]">
             <div className="grid grid-cols-3 gap-2">
-                {user.review ? user.review.map((_, idx) => (
+                {user.reviews ? user.reviews.map((review, idx) => (
                     <div className="relative group cursor-pointer" key={`_${idx}`}>
                         <img className="aspect-square object-cover group-hover:brightness-50 transition rounded"
-                             src="https://i.pinimg.com/736x/9b/65/29/9b6529111b01c8c261d7f83df3dd6c08.jpg"
+                             src={review.imageUrl}
+                             onClick={() => router.push(`/review/${review.reviewId}`)}
                              alt="게시글"/>
                         {/* TODO 리뷰 좋아요 댓글 수 Enable */}
                         {/*<div*/}
@@ -84,7 +85,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
         const {nickname} = params;
 
-        const user: Profile = await apiClient.get(`/api/v1/members/profile?nickname=${nickname}`);
+        const user: Profile = await apiClient.get(`/api/v1/members/profile?nickname=${nickname}&pageNumber=1`);
 
         const session = await getServerSession(context.req, context.res, nextAuthOption);
 
