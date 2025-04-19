@@ -33,13 +33,15 @@ const ReviewItem = ({review, isListView}: Props) => {
 
     return <div className="w-full sm:w-5/6 lg:w-2/3 flex flex-col gap-2 mb-6">
         <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2 w-1/2">
+            <div className="flex items-center gap-2 w-2/3">
                 {/*<SkeletonImage skeletonClassName="w-4 h-4" imgClassName="w-10 h-10 rounded-full border border-gray-300"*/}
                 {/*               src={article.user.profileImage || ""} alt="프로필 이미지"/>*/}
                 <div className="flex gap-2 items-center">
                     <div className="font-semibold">{review.nickname}</div>
-                    ·
-                    <div className="text-gray-500 text-sm">{formatRelativeTime(review.insDate)}</div>
+                    <span className="text-sm">{review.stationName}</span>
+                    <div className="text-gray-500 text-xs">
+                        <span>{formatRelativeTime(review.insDate)}</span>
+                    </div>
                 </div>
             </div>
             {session?.user.email === review.userEmail &&
