@@ -11,7 +11,7 @@ export function formatRelativeTime(inputTime: string, now: Date = new Date()): s
         throw new Error("Invalid date format. Please provide a valid ISO date string.");
     }
 
-    inputDate.setHours(inputDate.getHours() + 9);
+    inputDate.setHours(inputDate.getHours());
 
     const diffMs = now.getTime() - inputDate.getTime();
     const minutes = Math.floor(diffMs / (1000 * 60));
