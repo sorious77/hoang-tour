@@ -1,5 +1,4 @@
 import {IoEllipsisHorizontalSharp} from "react-icons/io5";
-import {SkeletonImage} from "@/components/skeleton";
 import HorizonLine from "@/components/horizonLine";
 import {Review} from "@/types/review";
 import React, {useState} from "react";
@@ -14,6 +13,8 @@ interface Props {
 }
 
 const ReviewItem = ({review, isListView}: Props) => {
+    const imageServerBaseUrl = process.env.NEXT_PUBLIC_IMAGE_SERVER_BASE_URL || "";
+
     const [dropdown, setDropdown] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -60,10 +61,11 @@ const ReviewItem = ({review, isListView}: Props) => {
         {isListView ?
             <Link href={`/review/${review.reviewId}`}>
                 <div className="mb-2">
-                    <SkeletonImage skeletonClassName="w-full aspect-square"
-                                   imgClassName="w-full aspect-square rounded-lg border-gray-200 border"
-                                   alt="리뷰 이미지"
-                                   src={review.reviewImageList[0].imageUrl}/>
+                    <img
+                        className="w-full aspect-square rounded-lg border-gray-200 border"
+                        src={`${imageServerBaseUrl}${review.reviewImageList[currentIndex].imageUrl}`}
+                        alt={`리뷰 ${review.reviewId} 이미지`}
+                    />
                 </div>
                 <div className="text-left px-1 break-all overflow-hidden line-clamp-1 overflow-ellipsis mb-2">
                     {review.contents}
@@ -73,10 +75,11 @@ const ReviewItem = ({review, isListView}: Props) => {
             <>
                 <div className="relative w-full max-w-lg mx-auto mb-5">
                     <div>
-                        <SkeletonImage skeletonClassName="w-full aspect-square"
-                                       imgClassName="w-full aspect-square rounded-lg border-gray-200 border"
-                                       alt="리뷰 이미지"
-                                       src={review.reviewImageList[currentIndex].imageUrl}/>
+                        <img
+                            className="w-full aspect-square rounded-lg border-gray-200 border"
+                            src={`${imageServerBaseUrl}${review.reviewImageList[currentIndex].imageUrl}`}
+                            alt={`리뷰 ${review.reviewId} 이미지`}
+                        />
 
                         {currentIndex > 0 && (
                             <button

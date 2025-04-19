@@ -13,7 +13,7 @@ const Page = ({reviews}: { reviews: Review[] | null }) => {
     const router = useRouter();
 
     return <div className="flex flex-col items-center w-full">
-        {reviews ? reviews.map(review => (
+        {(reviews && reviews.length) ? reviews.map(review => (
             <ReviewItem review={review} isListView key={review.reviewId}/>
         )) : <div className="flex flex-col">
             <div className="mb-4">작성된 리뷰가 없습니다.</div>
