@@ -8,6 +8,8 @@ import {getServerSession} from "next-auth";
 import {nextAuthOption} from "@/pages/api/auth/[...nextauth]";
 
 const Profile = ({user, isCurrentUser}: { user: Profile, isCurrentUser: boolean | null }) => {
+    const imageServerBaseUrl = process.env.NEXT_PUBLIC_IMAGE_SERVER_BASE_URL || "";
+
     const router = useRouter();
 
     const profileImage = "https://item.kakaocdn.net/do/ed9bfa677367ed21c2895cf3c5ed68b4d0bbab1214a29e381afae56101ded106";
@@ -42,8 +44,8 @@ const Profile = ({user, isCurrentUser}: { user: Profile, isCurrentUser: boolean 
             <div className="grid grid-cols-3 gap-2">
                 {user.reviews ? user.reviews.map((review, idx) => (
                     <div className="relative group cursor-pointer" key={`_${idx}`}>
-                        <img className="aspect-square object-cover group-hover:brightness-50 transition rounded"
-                             src={review.imageUrl}
+                        <img className="aspect-square object-cover group-hover:brightness-75 transition rounded border w-96"
+                             src={`${imageServerBaseUrl}${review.imageUrl}`}
                              onClick={() => router.push(`/review/${review.reviewId}`)}
                              alt="게시글"/>
                         {/* TODO 리뷰 좋아요 댓글 수 Enable */}
