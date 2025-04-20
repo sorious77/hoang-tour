@@ -160,6 +160,8 @@ const Page = ({stations, email, memberId}: PageProps) => {
                 </div>
 
                 {/* 내용 입력 */}
+                {errors?.contents?.message &&
+                    <div className="text-sm text-red-700 px-2 mt-2">{errors?.contents?.message}</div>}
                 <textarea
                     id="contents"
                     className="border border-gray-200 rounded-lg px-4 py-1.5 w-full resize-none focus:outline-none"
@@ -171,7 +173,6 @@ const Page = ({stations, email, memberId}: PageProps) => {
                         maxLength: {value: 1000, message: "내용을 10자 이상 1000자 이하로 입력하세요"}
                     })}
                 />
-                <div className="text-sm text-red-700 px-2 mt-2">{errors?.contents?.message}</div>
 
                 <div>
                     <div className="grid grid-cols-3 gap-3 mb-10 px-2">
