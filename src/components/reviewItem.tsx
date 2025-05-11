@@ -6,6 +6,8 @@ import {formatRelativeTime} from "@/lib/utils";
 import Link from "next/link";
 import {useSession} from "next-auth/react";
 import {ChevronLeft, ChevronRight} from "lucide-react";
+import apiClient from "@/lib/apiClient";
+import {useRouter} from "next/router";
 
 interface Props {
     review: Review,
@@ -19,6 +21,7 @@ const ReviewItem = ({review, isListView}: Props) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const {data: session} = useSession();
+    const router = useRouter();
 
     const nextPhoto = () => {
         if (currentIndex < review.reviewImageList.length - 1) {
@@ -29,6 +32,31 @@ const ReviewItem = ({review, isListView}: Props) => {
     const prevPhoto = () => {
         if (currentIndex > 0) {
             setCurrentIndex((prev => prev - 1));
+        }
+    }
+
+    const handleDelete = async (reviewId: number) => {
+        if (!confirm("정말로 삭제하시겠습니까?")) return;
+
+        try {
+
+            await apiClient.delete(`/api/v1/reviews`, {
+                headers: {Authorization: `Bearer ${session?.user.accessToken}`},
+                params: {
+                    reviewId,
+                    email: session?.user.email,
+                    memberId: session?.user.memberId
+                }
+            });
+
+            if (!isListView) {
+                await router.push("/review")
+            } else {
+                router.reload();
+            }
+        } catch (e) {
+            console.log(e);
+            alert("리뷰 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
         }
     }
 
@@ -53,7 +81,7 @@ const ReviewItem = ({review, isListView}: Props) => {
                             className="absolute z-10 bg-white px-5 py-2 top-5 right-0 w-28 border border-gray-200 rounded-lg flex flex-col gap-2">
                             {/*<button onClick={() => router.push(`/review/edit/${review.reviewId}`)}>수정하기</button>*/}
                             {/*<HorizonLine/>*/}
-                            <button>삭제하기</button>
+                            <button onClick={() => handleDelete(review.reviewId)}>삭제하기</button>
                         </div>}
                 </div>
             }
