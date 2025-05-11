@@ -61,6 +61,7 @@ const ReviewItem = ({review, isListView}: Props) => {
     }
 
     return <div className="w-full sm:w-5/6 lg:w-2/3 flex flex-col gap-2 mb-6">
+        <div className="font-bold text-2xl text-left">{review.title}</div>
         <div className="flex justify-between items-center">
             <div className="flex items-center gap-2 w-2/3">
                 {/*<SkeletonImage skeletonClassName="w-4 h-4" imgClassName="w-10 h-10 rounded-full border border-gray-300"*/}
