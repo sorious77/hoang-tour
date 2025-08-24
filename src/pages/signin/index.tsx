@@ -4,6 +4,8 @@ import {SubmitHandler, useForm, useWatch} from "react-hook-form";
 import {SignInProps} from "@/types/user";
 import ApiError from "@/types/apiError";
 import {signIn} from "next-auth/react";
+import FormField from "@/components/ui/form-field";
+import {VALIDATION, ERROR_MESSAGES} from "@/lib/constants";
 
 const Page = ({providers}: { providers: any }) => {
     const {
@@ -33,7 +35,7 @@ const Page = ({providers}: { providers: any }) => {
                 console.log(e);
                 alert(e.description);
             } else {
-                alert("로그인 중 에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
+                alert(ERROR_MESSAGES.LOGIN_ERROR);
             }
         }
     };
@@ -41,36 +43,36 @@ const Page = ({providers}: { providers: any }) => {
     return <div className="w-96">
         <h1 className="text-2xl font-bold mb-10">로그인</h1>
         <form className="flex flex-col gap-5 mb-4" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-1 items-start w-full">
-                <label htmlFor="email" className="flex justify-between items-center w-full">
-                    <span className="font-bold px-1 text-lg">이메일</span>
-                    <div className="text-sm text-red-700 ml-2">{errors.email?.message}</div>
-                </label>
-                <input type="text" id="email" required placeholder="이메일을 입력하세요."
-                       className="border border-gray-200 rounded-lg px-4 py-1.5 w-full"
-                       {...register("email", {
-                           required: true,
-                           pattern: {
-                               value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-                               message: "이메일 형식이 올바르지 않습니다."
-                           }
-                       })}
-                />
-            </div>
-            <div className="flex flex-col gap-1 items-start w-full">
-                <span className="font-bold px-1 text-lg">비밀번호</span>
-                <div className="text-sm text-red-700 ml-2 text-left">{errors.password?.message}</div>
-                <input type="password" id="password"
-                       className={`border border-gray-200 rounded-lg px-4 py-1.5 w-full`}
-                       minLength={8}
-                       maxLength={15}
-                       required
-                       placeholder="비밀번호를 입력하세요."
-                       {...register("password", {
-                           required: true,
-                       })}
-                />
-            </div>
+            <FormField
+                id="email"
+                label="이메일"
+                type="email"
+                placeholder="이메일을 입력하세요."
+                required
+                error={errors.email?.message}
+                register={register}
+                validation={{
+                    required: true,
+                    pattern: {
+                        value: VALIDATION.EMAIL.PATTERN,
+                        message: VALIDATION.EMAIL.MESSAGE
+                    }
+                }}
+            />
+            <FormField
+                id="password"
+                label="비밀번호"
+                type="password"
+                placeholder="비밀번호를 입력하세요."
+                required
+                error={errors.password?.message}
+                minLength={VALIDATION.PASSWORD.MIN_LENGTH}
+                maxLength={VALIDATION.PASSWORD.MAX_LENGTH}
+                register={register}
+                validation={{
+                    required: true,
+                }}
+            />
             <Button value="로그인" className="py-2" disabled={disabled} type="submit"/>
         </form>
     </div>

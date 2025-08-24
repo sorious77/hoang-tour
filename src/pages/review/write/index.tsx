@@ -131,6 +131,7 @@ const Page = ({stations, email, memberId}: PageProps) => {
                             value={station}
                             onFocus={() => setDropdown(true)}
                             onChange={(e) => handleStationChange(e.target.value)}
+                            autoComplete="off"
                         />
                         <button
                             className="text-right w-1/12 pr-4"

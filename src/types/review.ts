@@ -10,7 +10,7 @@ export type Review = {
     reviewImageList: ReviewImage[];
 }
 
-type ReviewImage = {
+export type ReviewImage = {
     reviewId: number;
     imageUrl: string;
     order: number;

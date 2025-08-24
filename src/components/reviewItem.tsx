@@ -4,7 +4,7 @@ import {Review} from "@/types/review";
 import React, {useState} from "react";
 import {formatRelativeTime} from "@/lib/utils";
 import Link from "next/link";
-import {useSession} from "next-auth/react";
+import {useAuth} from "@/hooks/useAuth";
 import {ChevronLeft, ChevronRight} from "lucide-react";
 import apiClient from "@/lib/apiClient";
 import {useRouter} from "next/router";
@@ -20,7 +20,7 @@ const ReviewItem = ({review, isListView}: Props) => {
     const [dropdown, setDropdown] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const {data: session} = useSession();
+    const {session} = useAuth();
     const router = useRouter();
 
     const nextPhoto = () => {
@@ -144,25 +144,6 @@ const ReviewItem = ({review, isListView}: Props) => {
             </>
         }
 
-        {/*<div className="flex justify-between text-2xl">*/}
-        {/*    <div className="flex w-1/4 justify-between">*/}
-        {/*        <div className="cursor-pointer hover:text-gray-400 transition-colors duration-100 ease-in-out">*/}
-        {/*            <IoHeartOutline/></div>*/}
-        {/*        <div className="cursor-pointer hover:text-gray-400 transition-colors duration-100 ease-in-out">*/}
-        {/*            <LiaCommentAltSolid/></div>*/}
-        {/*        <div className="cursor-pointer hover:text-gray-400 transition-colors duration-100 ease-in-out">*/}
-        {/*            <IoArrowRedoOutline/></div>*/}
-        {/*    </div>*/}
-        {/*    <div className="cursor-pointer hover:text-gray-400 transition-colors duration-100 ease-in-out">*/}
-        {/*        <IoBookmarkOutline/></div>*/}
-        {/*</div>*/}
-        {/*<div className="font-bold text-left text-sm">좋아요 1000개</div>*/}
-        {/*<div className="text-left text-sm">*/}
-        {/*    <div className="text-gray-400 flex flex-col gap-2">*/}
-        {/*        <div>댓글 100개 모두 보기</div>*/}
-        {/*        <div>댓글달기...</div>*/}
-        {/*    </div>*/}
-        {/*</div>*/}
         {isListView && <HorizonLine/>}
     </div>
 }

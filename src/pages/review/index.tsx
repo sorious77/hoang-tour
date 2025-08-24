@@ -4,8 +4,7 @@ import Link from "next/link";
 import apiClient from "@/lib/apiClient";
 import {GetServerSideProps} from "next";
 import {Review} from "@/types/review";
-import {getServerSession} from "next-auth";
-import {nextAuthOption} from "@/pages/api/auth/[...nextauth]";
+import {requireServerSideAuth} from "@/lib/auth";
 import Button from "@/components/button";
 import {useRouter} from "next/router";
 
@@ -31,12 +30,12 @@ export default Page;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
-        const session = await getServerSession(context.req, context.res, nextAuthOption);
+        const { session } = await requireServerSideAuth(context);
 
         const reviews: Review[] = await apiClient.get(`/api/v1/reviews/list/${0}`,
             {
                 headers: {
-                    Authorization: `Bearer ${session?.user.accessToken}`
+                    Authorization: `Bearer ${session.user.accessToken}`
                 }
             }
         );

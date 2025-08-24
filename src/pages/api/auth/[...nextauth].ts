@@ -2,6 +2,7 @@ import NextAuth, {NextAuthOptions, Session, User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import apiClient from "@/lib/apiClient";
 import {JWT} from "next-auth/jwt";
+import {SESSION_MAX_AGE} from "@/lib/constants";
 
 export const nextAuthOption: NextAuthOptions = {
     providers: [
@@ -35,7 +36,7 @@ export const nextAuthOption: NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
-        maxAge: 60 * 60
+        maxAge: SESSION_MAX_AGE
     },
     callbacks: {
         async jwt({token, user}) {

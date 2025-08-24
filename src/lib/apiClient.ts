@@ -1,6 +1,7 @@
 import axios from "axios";
 import getConfig from "next/config";
 import ApiError from "@/types/apiError";
+import {API_SUCCESS_CODE} from "@/lib/constants";
 
 const {publicRuntimeConfig} = getConfig();
 
@@ -23,8 +24,8 @@ apiClient.interceptors.response.use(
     (response) => {
         const result: BaseResponse<any> = response.data;
 
-        // `code` 값이 1000이 아닌 경우 에러 처리
-        if (result.code !== 1000) {
+        // `code` 값이 성공 코드가 아닌 경우 에러 처리
+        if (result.code !== API_SUCCESS_CODE) {
             throw new ApiError(result)
         }
 

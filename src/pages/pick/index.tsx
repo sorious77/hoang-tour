@@ -4,8 +4,8 @@ import {GetServerSideProps} from "next";
 import apiClient from "@/lib/apiClient";
 import ApiError from "@/types/apiError";
 import Button from "@/components/button";
-import {getServerSession} from "next-auth";
-import {nextAuthOption} from "@/pages/api/auth/[...nextauth]";
+import {requireServerSideAuth} from "@/lib/auth";
+import {Line, Station} from "@/types/station";
 
 interface PageProps {
     lines: Line[] | null,
@@ -76,15 +76,9 @@ export default Pick;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
-        const session = await getServerSession(context.req, context.res, nextAuthOption);
+        const { session } = await requireServerSideAuth(context);
 
-        if (!session) {
-            return {
-                props: {}
-            }
-        }
-
-        const {user: {accessToken}} = session;
+        const {user: {accessToken}} = session!;
 
         let lines: Line[] = await apiClient.get("/api/v1/lines/list",
             {

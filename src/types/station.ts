@@ -1,9 +1,9 @@
-type Line = {
+export type Line = {
     lineId: number;
     lineName: string;
 }
 
-type Station = {
+export type Station = {
     stationId: number;
     stationName: string;
     stationEngName: string;
