@@ -6,16 +6,9 @@ const Map = ({ station }: { station: Station | null }) => {
   const navermaps = useNavermaps();
   const [map, setMap] = useState<naver.maps.Map | null>(null);
 
-  const [markerPosition, setMarkerPosition] = useState(
-    new navermaps.LatLng(37.5563, 127.9723)
-  );
-
   useEffect(() => {
     if (station && map) {
       map.setCenter(new navermaps.LatLng(station.latitude, station.longitude));
-      setMarkerPosition(
-        new navermaps.LatLng(station.latitude, station.longitude)
-      );
     }
   }, [map, station]);
 
@@ -30,9 +23,7 @@ const Map = ({ station }: { station: Station | null }) => {
           }
           defaultZoom={15}
           ref={setMap}
-        >
-          <Marker position={markerPosition} />
-        </NaverMap>
+        ></NaverMap>
       </Container>
     </div>
   );
