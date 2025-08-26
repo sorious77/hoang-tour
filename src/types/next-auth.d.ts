@@ -1,17 +1,17 @@
-import {DefaultSession} from "next-auth";
+import { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
-    interface User {
-        memberId: number;
-        email: string;
-        nickname: string;
-        profileImage: string | null;
-        introduction: string;
-        accessToken: string;
-        refreshToken: string;
-    }
+  interface User {
+    memberId: number;
+    email: string;
+    nickname: string;
+    profileImage?: string | null;
+    introduction?: string | null;
+    accessToken: string;
+    refreshToken: string;
+  }
 
-    interface Session {
-        user: User & DefaultSession["user"];
-    }
+  interface Session {
+    user: User & DefaultSession["user"];
+  }
 }
