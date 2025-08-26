@@ -1,33 +1,41 @@
-import {NaverMap, useNavermaps, Container, Marker} from "react-naver-maps";
-import {useEffect, useState} from "react";
+import { NaverMap, useNavermaps, Container, Marker } from "react-naver-maps";
+import { useEffect, useState } from "react";
+import { Station } from "@/types/station";
 
-const Map = ({station}: { station: Station | null }) => {
-    const navermaps = useNavermaps();
-    const [map, setMap] = useState<naver.maps.Map | null>(null);
+const Map = ({ station }: { station: Station | null }) => {
+  const navermaps = useNavermaps();
+  const [map, setMap] = useState<naver.maps.Map | null>(null);
 
-    const [markerPosition, setMarkerPosition] = useState(new navermaps.LatLng(37.5563, 127.9723));
+  const [markerPosition, setMarkerPosition] = useState(
+    new navermaps.LatLng(37.5563, 127.9723)
+  );
 
-    useEffect(() => {
-        if (station && map) {
-            map.setCenter(new navermaps.LatLng(station.latitude, station.longitude))
-            setMarkerPosition(new navermaps.LatLng(station.latitude, station.longitude))
-        }
-    }, [map, station]);
+  useEffect(() => {
+    if (station && map) {
+      map.setCenter(new navermaps.LatLng(station.latitude, station.longitude));
+      setMarkerPosition(
+        new navermaps.LatLng(station.latitude, station.longitude)
+      );
+    }
+  }, [map, station]);
 
-    if (!station) return null;
+  if (!station) return null;
 
-    return <div className="w-[350px] h-[450px] sm:w-[500px] md:w-[700px] lg:w-[900px] bg-gray-400">
-        <Container className="w-full h-full shadow border border-gray-200">
-            <NaverMap
-                defaultCenter={new navermaps.LatLng(station.latitude, station.longitude)}
-                defaultZoom={15}
-                ref={setMap}
-            >
-                <Marker position={markerPosition}
-                />
-            </NaverMap>
-        </Container>
+  return (
+    <div className="w-[350px] h-[450px] sm:w-[500px] md:w-[700px] lg:w-[900px] bg-gray-400">
+      <Container className="w-full h-full shadow border border-gray-200">
+        <NaverMap
+          defaultCenter={
+            new navermaps.LatLng(station.latitude, station.longitude)
+          }
+          defaultZoom={15}
+          ref={setMap}
+        >
+          <Marker position={markerPosition} />
+        </NaverMap>
+      </Container>
     </div>
-}
+  );
+};
 
 export default Map;
