@@ -56,12 +56,7 @@ const Profile = ({
       try {
         setLoading(true);
         const response: Profile = await apiClient.get(
-          `/api/v1/members/profile?nickname=${user.nickname}&pageNumber=${pageNum}`,
-          {
-            headers: {
-              Authorization: `Bearer ${session.user.accessToken}`,
-            },
-          }
+          `/api/v1/members/profile?nickname=${user.nickname}&pageNumber=${pageNum}`
         );
 
         if (pageNum === 1) {

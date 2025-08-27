@@ -42,12 +42,7 @@ const Page = () => {
       try {
         setLoading(true);
         const response: Review[] = await apiClient.get(
-          `/api/v1/reviews/list/${pageNum}`,
-          {
-            headers: {
-              Authorization: `Bearer ${session.user.accessToken}`,
-            },
-          }
+          `/api/v1/reviews/list/${pageNum}`
         );
 
         if (pageNum === 0) {
